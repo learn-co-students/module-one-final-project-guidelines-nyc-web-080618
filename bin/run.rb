@@ -1,5 +1,6 @@
 require_relative '../config/environment'
 
-
-
-puts "HELLO WORLD"
+def greet(user_response)
+  puts "hey, what's your progress?"
+  user_response = gets.chomp
+end
