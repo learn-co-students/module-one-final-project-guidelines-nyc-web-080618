@@ -30,4 +30,23 @@ class User < ActiveRecord::Base
   def add_collaborator(user, repository)
     UserRepository.create(user_id: user.id, repository_id: repository.id, forked: false)
   end
+
+  def get_repos_by_languages(language)
+    found_repos = []
+    repositories.each do |repo|
+      repo.repository_languages.each do |repo_lang|
+        if repo_lang.language_id == language.id
+          found_repos << repo
+        end
+      end
+    end
+    found_repos
+  end
 end
+
+# ^^^^ test data ^^^^
+# repo = Repository.find(94)
+# UserRepository.find_by(repository_id: repo.id)
+# user = User.find(2)
+# lang = Language.find(7)
+# user.get_repos_by_languages(lang)
