@@ -4,4 +4,6 @@ class Repository < ActiveRecord::Base
 
   has_many :repo_langs
   has_many :languages, through: :repo_langs
+
+  has_many :branches
 end
