@@ -25,10 +25,6 @@ class User < ActiveRecord::Base
     # add our user to that repo
     repo = create_repo(repository.name)
     repo.update(forked: true)
-    # my_array = forked_repositories
-    # binding.pry
-    # self.forked_repositories << repo
-    # repository.forked_users << self
     UserRepository.create(user_id: self.id, repository_id: repository.id, forked: true)
   end
 
@@ -43,6 +39,13 @@ class User < ActiveRecord::Base
     # get all our original repos
     # get all forks of those repos
     # get all users of those forks
+    our_repos = user_repositories.where(forked: false)
+    our_forked_users = our_repos.map do |repo|
+      repo.repository.users
+    end.flatten
+    our_forked_users.select do |user|
+      user.id != self.id
+    end
   end
 
   def self.search_repositories_by_username(name)
