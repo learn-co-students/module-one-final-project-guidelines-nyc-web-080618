@@ -84,15 +84,31 @@ class Character  < ActiveRecord::Base
   #   end
   # end
 
+  def quest_interface
+    difficulty = [1, self.power/3].max
+    if self.get_recommended_quests(difficulty).size == 0
+      puts "You have completed all recommended quests!!!"
+    else
+      puts "Here are quests we recommend for Player Attack: #{self.power}"
+      self.print_quests(difficulty)
+      puts "Select a quest number"
+      puts "Number:"
+      selection = gets.chomp.to_i
 
+      puts "You have completed: #{self.get_recommended_quests(difficulty)[selection-1].title}"
+      puts " "
+      puts "Time for your reward adventurer!!!"
+      available_weapons = self.get_available_weapons(difficulty)
+      self.quest_selection(selection, difficulty)
+      self.weapon_reward(available_weapons)
+    end
+  end
 
   def weapon_reward(available_weapons)
-      reward = available_weapons.sample
-      reward_name = reward.name
-      puts "#{reward_name}"
-      puts "Attack Power: #{reward.attack_power}"
-      weapon_id = reward.id
-      CharacterWeapon.new_character_weapon(self.id, weapon_id)
+    reward = available_weapons.sample
+    CharacterWeapon.new_character_weapon(self.id, reward.id)
+    puts "#{reward.name}"
+    puts "Attack Power: #{reward.attack_power}"
 
       # if reward.attack_power > highest_attack_power_weapon.attack_power || self.power == 1
       #   self.update(power: self.power+reward.attack_power)

@@ -11,7 +11,7 @@ require "faker"
   #puts "done with characters"
   ######quests
   puts "making quests"
-  10.times do
+  30.times do
   Quest.create(title:Faker::WorldOfWarcraft.unique.quote, difficulty: rand(1..3))
   end
 
@@ -21,7 +21,7 @@ require "faker"
 
   ####weapons
   puts "making weapons"
-  10.times do
+  30.times do
   Weapon.create(name:Faker::Dota.unique.item, attack_power: rand(1..10))
   end
 
