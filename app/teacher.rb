@@ -1,5 +1,10 @@
 class Teacher < ActiveRecord::Base
-  has_many :students
+  has_many :students, through: :reviews
   belongs_to :school
 
-end
+
+
+
+
+
+end#END OF CLASS
