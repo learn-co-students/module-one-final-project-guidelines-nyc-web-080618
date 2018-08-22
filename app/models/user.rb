@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
 
   has_many :branches, through: :repositories
 
+  has_many :forks, through: :repositories
+
   def fork_repo(repository)
     # add our user to that repo
     new_repo = Repository.create(name: repository.name)

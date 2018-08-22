@@ -6,4 +6,5 @@ class Repository < ActiveRecord::Base
   has_many :languages, through: :repository_languages
 
   has_many :branches
+  has_many :forks
 end
