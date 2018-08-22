@@ -18,4 +18,12 @@ class User < ActiveRecord::Base
       user_fork.repository
     end
   end
+
+  def self.search_repositories_by_username(name)
+    user = User.find_by(name: name)
+    user_repos = UserRepository.where(user_id: user.id)
+    user_repos.map do |user_repo|
+      user_repo.repository
+    end
+  end
 end
