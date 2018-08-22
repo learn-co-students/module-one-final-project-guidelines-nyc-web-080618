@@ -5,4 +5,17 @@ class User < ActiveRecord::Base
   has_many :languages, through: :repositories
 
   has_many :branches, through: :repositories
+
+  def fork_repo(repository)
+    # add our user to that repo
+    new_repo = Repository.create(name: repository.name)
+    UserRepository.create(user_id: self.id, repository_id: new_repo.id, forked: true)
+  end
+
+  def forks
+    user_forks_arr = user_repositories.where(forked: true)
+    user_forks_arr.map do |user_fork|
+      user_fork.repository
+    end
+  end
 end
