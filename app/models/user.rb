@@ -8,8 +8,9 @@ class User < ActiveRecord::Base
 
   def fork_repo(repository)
     # add our user to that repo
-    new_repo = Repository.create(name: repository.name)
-    UserRepository.create(user_id: self.id, repository_id: new_repo.id, forked: true)
+    #new_repo = Repository.create(name: repository.name)
+    UserRepository.create(user_id: self.id, repository_id: repository.id, forked: true)
+    # new_repo
   end
 
   def forks
