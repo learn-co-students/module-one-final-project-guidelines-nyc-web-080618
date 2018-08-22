@@ -19,6 +19,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.search_repositories_by_username(name)
+    user = User.find_by(name: name)
+    user_repos = UserRepository.where(user_id: user.id)
+    user_repos.map do |user_repo|
+      user_repo.repository
+    end
+  end
 
   def add_collaborator(user, repository)
     UserRepository.create(user_id: user.id, repository_id: repository.id, forked: false)
