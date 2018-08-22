@@ -6,6 +6,7 @@ class Repository < ActiveRecord::Base
   has_many :languages, through: :repository_languages
 
   has_many :branches
+  has_many :forks
 
   def fork_count
     user_repositories.where(forked: true).count

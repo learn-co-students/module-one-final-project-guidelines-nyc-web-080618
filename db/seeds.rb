@@ -17,16 +17,10 @@ puts "creating users"
 puts "done with users"
 
 puts "creating repositories"
-  15.times do |i|
-    Repository.create(name: Faker::MichaelScott.quote)
+  User.all.each do |user|
+    user.create_repo(Faker::MichaelScott.unique.quote)
   end
 puts "done with repositories"
-
-puts "creating user_repositories"
-  15.times do |i|
-    UserRepository.create(user_id: User.all.sample.id, repository_id: Repository.all.sample.id, forked: false)
-  end
-puts "done with user_repositories"
 
 puts "creating languages"
   10.times do |i|

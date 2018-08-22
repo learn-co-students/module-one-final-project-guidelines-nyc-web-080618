@@ -1,16 +1,35 @@
+require 'pry'
 class User < ActiveRecord::Base
+  @forked_repositories = []
+
+  attr_accessor :forked_repositories
+
   has_many :user_repositories
   has_many :repositories, through: :user_repositories
+  # has_many :repositories, through: :user_repositories
 
   has_many :languages, through: :repositories
 
   has_many :branches, through: :repositories
 
+  # has_many :forks, through: :repositories
+
+
+
+  def create_repo(name)
+    repo = Repository.create(name: name)
+    UserRepository.create(user_id: self.id, repository_id: repo.id, forked: false)
+  end
+
   def fork_repo(repository)
     # add our user to that repo
-    new_repo = Repository.create(name: repository.name)
+    repo = create_repo(repository.name)
+    repo.update(forked: true)
+    # my_array = forked_repositories
+    # binding.pry
+    # self.forked_repositories << repo
+    # repository.forked_users << self
     UserRepository.create(user_id: self.id, repository_id: repository.id, forked: true)
-    # new_repo
   end
 
   def forks
@@ -18,6 +37,12 @@ class User < ActiveRecord::Base
     user_forks_arr.map do |user_fork|
       user_fork.repository
     end
+  end
+
+  def users_that_forked_our_repos
+    # get all our original repos
+    # get all forks of those repos
+    # get all users of those forks
   end
 
   def self.search_repositories_by_username(name)
@@ -51,3 +76,8 @@ end
 # user = User.find(2)
 # lang = Language.find(7)
 # user.get_repos_by_languages(lang)
+
+# repo = Repository.create(name: "MEH")
+# user1 = User.create(name: "Bleh")
+# user2 = User.create(name: "Buh")
+# user1.fork_repo(repo)
