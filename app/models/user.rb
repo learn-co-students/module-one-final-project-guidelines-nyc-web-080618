@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
     end
   end
 
+
   def add_collaborator(user, repository)
     UserRepository.create(user_id: user.id, repository_id: repository.id, forked: false)
   end
