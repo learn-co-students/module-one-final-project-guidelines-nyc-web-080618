@@ -1,4 +1,6 @@
 class Language < ActiveRecord::Base
-  has_many :repo_langs
-  has_many :repositories, through: :repo_langs
+  has_many :repository_languages
+  has_many :repositories, through: :repository_languages
+
+  has_many :users, through: :repositories
 end
