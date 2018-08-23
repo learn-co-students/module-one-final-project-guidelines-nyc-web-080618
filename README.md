@@ -10,7 +10,7 @@ We have 3 many-to-many relationships in our model.
 
 3. The Last many-to-many relationship is formed by Event, User, and UserEvent. UserEvent will be the joint table. Users can save the events they are going to attend.
 
-https://drive.google.com/file/d/0Bx1oOvHAPVD-NnNTaV9wSGhlRjFWU3JxZ1BWMXYtSWZEMzJJ/view?usp=sharing
+![Alt picture](picture.png?raw=true "Title")
 
 
 Each class stores different information. Users can easily find out information they need, such as
