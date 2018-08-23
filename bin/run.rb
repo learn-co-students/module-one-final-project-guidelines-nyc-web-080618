@@ -216,7 +216,6 @@ def main
         readExit = read_menu(current_user)
       end
       # system "clear" or system "cls"
-
     when "3" ### UPDATE
       update_menu(current_user)
       # system "clear" or system "cls"
