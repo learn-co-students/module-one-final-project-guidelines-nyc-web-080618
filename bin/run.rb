@@ -172,7 +172,17 @@ def main_menu
              puts "Your saved events list"
              puts ""
              puts $user.events.pluck(:name,:time,:price)
+             puts "Enter 1 to return to main manu"
+             puts "Enter 2 to delete your saved event"
+             option = gets.chomp
+             if option == "2"
+                $user.destroy
+                puts "You have successfully deleted your saved events"
+             else
+               next
+             end
            end
+
        elsif choice == "4"
          a = Artii::Base.new :font => 'slant'
          puts a.asciify('Thank you ! Bye').red
@@ -183,6 +193,8 @@ def main_menu
        end
     end
 end
+
+
 
 welcome
 main_menu
