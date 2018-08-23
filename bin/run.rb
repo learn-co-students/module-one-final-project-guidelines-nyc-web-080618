@@ -1,50 +1,7 @@
 require_relative '../config/environment'
 require 'commander/import'
 
-<<<<<<< HEAD
-puts "Welcome. What's your name?"
-name = gets.chomp
-puts "What is your email"
-email = gets.chomp
-puts "Please choose a username"
-username = gets.chomp
-current_user = User.create(name: name, username: username, email: email)
-input = ""
-while input != "exit"
-  puts "What would you like to do? Type exit to exit."
-  puts "1. Create a repository"
-  puts "2. Read a repository (name)"
-  puts "3. Update a repository"
-  puts "4. Delete a repository"
-  input = gets.chomp
-  case input
-  when "1"
-    system "clear" or system "cls"
-    puts "What is the name of your repository?"
-    name_input = gets.chomp
-    current_user.create_repo(name_input)
-  when "2"
-    system "clear" or system "cls"
-    puts "What repository do you want to view?"
-    name_input = gets.chomp
-    puts Repository.find_by(name: name_input)
-  when "3"
-    system "clear" or system "cls"
-    puts "What repository are you updating?"
-    name_input = gets.chomp
-    repo = Repository.find_by(name: name_input)
-    puts "What would you like to rename the repo?"
-    repo.update(name: gets.chomp)
-    puts repo
-  when "4"
-    system "clear" or system "cls"
-    puts "Which repository are you deleting?"
-    name_input = gets.chomp
-    repo = Repository.find_by(name: name_input)
-    repo.destroy
-    puts "Repo deleted. Trust me"
-=======
-def read_menu
+def read_menu(current_user)
   system "clear" or system "cls"
   puts "What info would you like"
   puts "1. Read a user"
@@ -83,15 +40,69 @@ def read_menu
     puts " "
   when "9"
     puts " "
->>>>>>> 747fd7d4b784c096692faf96e1d65368a4946a14
   when "exit"
     return
   else
     puts " "
   end
-end
-<<<<<<< HEAD
-=======
+end # end create_menu
+
+def create_menu(current_user)
+  system "clear" or system "cls"
+
+  puts "What are we doing today? Exit to exit"
+  puts "1. Create Repository"
+  puts "2. Fork Repository"
+  puts "3. Star Repository"
+  puts "4. Follow User"
+  create_input = gets.chomp
+
+  case create_input
+  when "1"
+    puts "Repository name: "
+    current_user.create_repo(gets.chomp)
+  when "2"
+    found = false
+    while !found
+      puts "Repository name: "
+      create_name_input = gets.chomp
+      repo = Repository.find_by(name: create_name_input)
+      if repo
+        current_user.fork_repo(repo)
+        found = true
+      else
+        puts "Repository not found."
+      end
+    end
+  when "3"
+    found = false
+    while !found
+      puts "Which repository would you like to star?"
+      repo = Repository.find_by(name: gets.chomp)
+      if repo
+         current_user.star_repo(repo)
+         found = true
+      else
+        puts "Repository not found."
+      end
+    end
+  when "4"
+    found = false
+    while !found
+      puts "Which user would you like to follow? Please enter a username"
+      user = User.find_by(username: gets.chomp)
+      if user
+        current_user.follow_user(user.username)
+        found = true
+      else
+        puts "Username not found."
+    end
+  when "exit"
+    return
+  else
+    puts "Please enter a valid choice."
+  end
+end # end create_menu
 
 def main
   puts "Welcome!"
@@ -107,19 +118,17 @@ def main
   input = ""
   while input != "exit"
     puts "What would you like to do? Type exit to exit"
-    puts "1. Create a repository"
-    puts "2. Read a repository (name)"
-    puts "3. Update a repository"
-    puts "4. Delete a repository"
+    puts "1. Create"
+    puts "2. Read"
+    puts "3. Update"
+    puts "4. Delete"
     input = gets.chomp
     case input
     when "1" ### CREATE
+      create_menu(current_user)
       system "clear" or system "cls"
-      puts "What is the name of your repository?"
-      name_input = gets.chomp
-      current_user.create_repo(name_input)
     when "2" ### READ
-      read_menu
+      read_menu(current_user)
       system "clear" or system "cls"
     when "3" ### UPDATE
       system "clear" or system "cls"
@@ -146,4 +155,3 @@ def main
 end # end main
 
 main
->>>>>>> 747fd7d4b784c096692faf96e1d65368a4946a14
