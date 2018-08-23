@@ -1,3 +1,4 @@
+require"colorize"
 class Character  < ActiveRecord::Base
   has_many :character_weapons
   has_many :weapons, through: :character_weapons
@@ -6,14 +7,14 @@ class Character  < ActiveRecord::Base
   has_many :quests, through: :character_quests
 
   def self.new_character(name)
-    Character.create(name: name, hp: 100, power: 1)
+    Character.create(name: name, hp: 50, power: 1)
   end
 
   def get_completed_quests
     if self.quests.size == 0
-      puts "You have not completed any quests!!!"
+      puts "You have not completed any quests!!!".red
     else
-      puts "Completed Quests:"
+      puts "Completed Quests:".underline
       self.quests.each_with_index do |quest, i|
         puts "#{i+1}: #{quest.title}"
       end
@@ -50,7 +51,7 @@ class Character  < ActiveRecord::Base
 
   def show_all_weapons
     self.weapons.each do |weapon|
-      puts "**** #{weapon.name} **** Attack Power: #{weapon.attack_power} ****"
+      puts "**** #{weapon.name} **** Weapon Power: #{weapon.attack_power} ****".italic
     end
   end
 
@@ -90,30 +91,31 @@ class Character  < ActiveRecord::Base
   def quest_interface
     difficulty = self.get_difficulty
     if self.get_recommended_quests(difficulty).size == 0
-      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^".red
+      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^".red
       puts "You have completed all recommended quests!!!"
-      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^".red
+      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^".red
     else
-      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-      puts "Here are quests we recommend for Player Attack: #{self.power}"
+      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^".red
+      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^".red
+      puts "Recommended Quests for Player Attack: #{self.power}".bold.blue
+      puts ""
       self.print_quests(difficulty)
-      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^".red
+      puts "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^".red
       puts "Select a quest number"
       puts "Number:"
       selection = gets.chomp
       if selection.to_i > self.get_recommended_quests(difficulty).size || selection.to_i < 1
-        puts "Invalid input, please try again!"
+        puts "Invalid input, please try again!".red.bold
       else
-        puts"**************************************"
+        puts"*******************************************"
         puts "You have completed: #{self.get_recommended_quests(difficulty)[selection.to_i-1].title}"
-        puts"**************************************"
+        puts"*******************************************"
         puts " "
-        puts"#####################################"
-        puts "Time for your reward adventurer!!!"
+        puts"#####################################".blink
+        puts "Time For Your Reward Adventurer!!!"
         available_weapons = self.get_available_weapons(difficulty)
         self.quest_selection(selection, difficulty)
         self.weapon_reward(available_weapons)
@@ -124,9 +126,9 @@ class Character  < ActiveRecord::Base
   def weapon_reward(available_weapons)
     reward = available_weapons.sample
     CharacterWeapon.new_character_weapon(self.id, reward.id)
-    puts "#{reward.name}"
-    puts "Attack Power: #{reward.attack_power}"
-    puts"#####################################"
+    puts "#{reward.name}".bold.blue
+    puts "Weapon Power: #{reward.attack_power}"
+    puts"#####################################".blink
       if reward.attack_power > self.power - 1 || self.power == 1
         self.update(power: 1+reward.attack_power)
       end
@@ -140,24 +142,24 @@ class Character  < ActiveRecord::Base
 
   def print_recommended_targets
     find_target_sample = self.recommended_targets.sample(5)
-    puts "Here is your targets that we recommend for you"
-    puts "Your attack power: #{self.power}"
+    puts "Recommended Targets".bold.underline
+    puts "Your Attack Power: #{self.power}".italic.blue
     find_target_sample.each_with_index do |target , i|
-      puts "***********************"
-      puts "#{i+1}. #{target.name}"
-      puts "    Attack_power:#{target.power}"
+      puts "***********************".bold.red
+      puts "#{i+1}. #{target.name}".bold
+      puts "    Attack Power:#{target.power}"
       puts "    HP: #{target.hp}"
     end
-    puts "***********************"
+    puts "***********************".bold.red
     find_target_sample
   end
 
   def select_target
     target_list = print_recommended_targets
-    puts "Select your target by number"
+    puts "Select Your Target By Number".bold.yellow
     input = gets.chomp
     if input.to_i > 5 || input.to_i < 1
-      puts"Please input valid target number"
+      puts"Please Input Valid Target Number".red.bold
       self.select_target
     else
       target = target_list[input.to_i - 1]
@@ -169,56 +171,56 @@ class Character  < ActiveRecord::Base
     if self.power == target.power
       if rand > 0.5
         target.update_hp(-10)
-        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-        puts "#{self.name} has defeated #{target.name}"
-        puts "#{self.name} hp: #{self.hp}"
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$".blink
+        puts "#{self.name} Has Defeated #{target.name}"
+        puts "#{self.name} HP: #{self.hp}"
         if target.hp > 0
-          puts "#{target.name} hp: #{target.hp}"
+          puts "#{target.name} HP: #{target.hp}"
         end
-        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$".blink
       else
         self.update_hp(-10)
-        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-        puts "#{self.name} has lost battle to #{target.name}"
-        puts "#{self.name} hp: #{self.hp}"
-        puts "#{target.name} hp: #{target.hp}"
-        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$".blink
+        puts "#{self.name} Has Lost Battle to #{target.name}".bold
+        puts "#{self.name} HP: #{self.hp}"
+        puts "#{target.name} HP: #{target.hp}"
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$".blink
       end
     elsif self.power > target.power
-        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$".blink
       if rand < (0.4 + ((self.power - target.power).to_f/4))
         target.update_hp(-5*(self.power - target.power))
-        puts "#{self.name} has defeated #{target.name}"
-        puts "#{self.name} hp: #{self.hp}"
+        puts "#{self.name} Has Defeated #{target.name}".bold
+        puts "#{self.name} HP: #{self.hp}"
         if target.hp > 0
-          puts "#{target.name} hp: #{target.hp}"
+          puts "#{target.name} HP: #{target.hp}"
         end
-        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$".blink
       else
         self.update_hp(-10)
-        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-        puts "#{self.name} has lost battle to #{target.name}"
-        puts "#{self.name} hp: #{self.hp}"
-        puts "#{target.name} hp: #{target.hp}"
-        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$".blink
+        puts "#{self.name} Has Lost Battle to #{target.name}".bold
+        puts "#{self.name} HP: #{self.hp}"
+        puts "#{target.name} HP: #{target.hp}"
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$".blink
       end
     else
       if rand > (0.45 + ((target.power - self.power).to_f/4))
         target.update_hp(-2*(-self.power + target.power))
-        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-        puts "#{self.name} has defeated #{target.name}"
-        puts "#{self.name} hp: #{self.hp}"
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$".blink
+        puts "#{self.name} Has Defeated #{target.name}"
+        puts "#{self.name} HP: #{self.hp}"
         if target.hp > 0
-          puts "#{target.name} hp: #{target.hp}"
-        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+          puts "#{target.name} HP: #{target.hp}"
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$".blink
         end
       else
         self.update_hp(-3*(-self.power + target.power))
-        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-        puts "#{self.name} has lost battle to #{target.name}"
-        puts "#{self.name} hp: #{self.hp}"
-        puts "#{target.name} hp: #{target.hp}"
-        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$".blink
+        puts "#{self.name} Has Lost Battle to #{target.name}".bold.yellow
+        puts "#{self.name} HP: #{self.hp}"
+        puts "#{target.name} HP: #{target.hp}"
+        puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$".blink
       end
     end
   end
@@ -227,21 +229,22 @@ class Character  < ActiveRecord::Base
   def update_hp(change)
     self.update(hp:self.hp + change)
     if self.hp <= 0
-      puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-      puts "#{self.name} has died !!!!!!!!!!!"
+      puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$".blink
+      puts "#{self.name} IS DEAD !!!!!!!!!!!".bold.red
       self.destroy
     end
   end
 
 
   def show_stats
+      puts "*********************************"
     if self.weapons.size == 0
-      puts "Current health: #{self.hp}"
-      puts "Current power: #{self.power}"
+      puts "Current Health:".red + " #{self.hp}".bold
+      puts "Current Power:".blue + " #{self.power}".bold
     else
-      puts "Current health: #{self.hp}"
-      puts "Current power: #{self.power}"
-      puts "Equipped weapon: #{self.highest_attack_power_weapon.name}"
+      puts "Current Health:".red + " #{self.hp}".bold
+      puts "Current Power:".blue + " #{self.power}".bold
+      puts "Equipped Weapon:".green + " #{self.highest_attack_power_weapon.name}".bold
     end
   end
 

@@ -1,13 +1,13 @@
 require_relative '../config/environment'
 require_all 'app'
 require "faker"
-
+require "colorize"
 
   input = 0
   welcome
   player = player_choose
   puts"*********************************"
-  puts "Starting adventure for #{player.name} "
+  puts "Starting Adventure For" + " #{player.name}".blue.bold
         player.show_stats
   puts"*********************************"
   while input != "6" and player.hp > 0
@@ -17,4 +17,4 @@ require "faker"
     exec_selection(player,input)
   end
 
-  puts Faker::GreekPhilosophers.quote
+  puts Faker::StarWars.quote.italic.green

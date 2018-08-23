@@ -1,5 +1,7 @@
 require 'bundler'
 require 'pry'
+require "faker"
+require "colorize"
 
 Bundler.require
 require_all 'app'

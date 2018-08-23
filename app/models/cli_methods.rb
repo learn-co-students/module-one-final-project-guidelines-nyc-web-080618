@@ -1,43 +1,46 @@
 require "faker"
-
+require "colorize"
+require "artii"
 
 def welcome
-  puts "Welcome to our awesome game"
-  puts Faker::GreekPhilosophers.quote
+  a = Artii::Base.new
+  puts a.asciify "Welcome"
+  # puts "Welcome to our awesome game".bold
+  puts Faker::GreekPhilosophers.quote.italic.green
   puts ""
-  puts "Are your a:"
-  puts "1.New User"
-  puts "2.Existing adventurer"
+  puts "Are You:".bold.blue.underline
+  puts "1. New User".italic
+  puts "2. Existing Adventurer".italic
+  puts ""
+  puts "Selection:"
 end
 
 def selections
-  puts "Here are your options"
-  puts "1. Show stats"
-  puts "2. Show weapons"
-  puts "3. Show completed quests"
-  puts "4. Do a quest"
-  puts "5. Fight with other Player"
-  puts "6. Exit game"
+  puts "Here Are Your Options".bold.underline
+  puts "1. Show Stats".italic
+  puts "2. Show Weapons".italic
+  puts "3. Show Completed Quests".italic
+  puts "4. Do a Quest".italic
+  puts "5. Fight With Other Player".italic
+  puts "6. Exit Game".italic
   puts ""
   puts ""
-  puts "Your selection, sire?"
+  puts "Your Selection, Sire?".bold.yellow
   input = gets.chomp
 end
 
 def character_creation
-  puts "Please enter your character name"
-  puts "name"
+  puts "Please Enter Your Character Name"
   puts " "
+  puts "Name:"
+
 
   input = gets.chomp
   player = Character.new_character(input)
   puts "Your name: #{player.name}"
-  puts "Current health: #{player.hp}"
-  puts "Current power: #{player.power}"
-  puts "************************"
-  puts "please remember your ID"
-  puts "ID #{player.id}"
-  puts "************************"
+  puts "*********************************"
+  puts "PLEASE REMEMBER YOUR ID".bold.red
+  puts "ID #{player.id}".green.bold
   player
 end
 
@@ -46,7 +49,8 @@ def exec_selection(player, selection)
   if selection == "1"
     player.show_stats
   elsif selection == "2"
-    puts "Here are your weapons:"
+    puts ""
+    puts "Here Are Your Weapons:".bold.blue
     puts " "
     player.show_all_weapons
   elsif selection == "3"
@@ -57,20 +61,20 @@ def exec_selection(player, selection)
     target = player.select_target
     player.attack(target)
   elsif selection == "6"
-    puts Faker::GreekPhilosophers.quote
+    puts Faker::GreekPhilosophers.quote.italic.green
   else
-    puts  "Invalid selection"
+    puts  "Invalid Selection".red.bold
   end
 end
 
 def find_existing_character
-  puts"Enter your character ID"
+  puts"Enter Your Character ID".bold
   input = gets.chomp
   if Character.all.exists?(id:input.to_i)
       Character.all.find_by(id:input.to_i)
 
   else
-    puts"Character not exist or invalide input, please try again!!!"
+    puts"Character not exist or invalid input, please try again!!!".red
     find_existing_character
   end
 end
