@@ -142,20 +142,28 @@ class Character  < ActiveRecord::Base
 
   def print_recommended_targets
     find_target_sample = self.recommended_targets.sample(5)
-    puts "Recommended Targets".bold.underline
-    puts "Your Attack Power: #{self.power}".italic.blue
-    find_target_sample.each_with_index do |target , i|
+
+      puts "Recommended Targets".bold.underline
+      puts "Your Attack Power: #{self.power}".italic.blue
+      find_target_sample.each_with_index do |target , i|
+        puts "***********************".bold.red
+        puts "#{i+1}. #{target.name}".bold
+        puts "    Attack Power:#{target.power}"
+        puts "    HP: #{target.hp}"
+      end
       puts "***********************".bold.red
-      puts "#{i+1}. #{target.name}".bold
-      puts "    Attack Power:#{target.power}"
-      puts "    HP: #{target.hp}"
-    end
-    puts "***********************".bold.red
-    find_target_sample
+      find_target_sample
+
   end
 
   def select_target
     target_list = print_recommended_targets
+    if target_list.size == 0
+      puts "There Are No Available Targets!".bold.red
+
+      target = nil
+
+    else
     puts "Select Your Target By Number".bold.yellow
     input = gets.chomp
     if input.to_i > 5 || input.to_i < 1
@@ -165,9 +173,13 @@ class Character  < ActiveRecord::Base
       target = target_list[input.to_i - 1]
     end
   end
+  end
 
 
   def attack(target)
+    if target == nil
+          puts "Invite Some Friends to Play This Awesome Game".blue
+    else
     if self.power == target.power
       if rand > 0.5
         target.update_hp(-10)
@@ -223,6 +235,7 @@ class Character  < ActiveRecord::Base
         puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$".blink
       end
     end
+  end
   end
 
 
