@@ -14,6 +14,10 @@ puts "creating users"
   5.times do |i|
     User.create(name: Faker::Name.unique.name, username: Faker::LordOfTheRings.unique.character, email: Faker::Internet.unique.email)
   end
+
+  User.create(name: "Justin", username: "jwang", email: "jwang138@binghamton.edu")
+  User.create(name: "Jesse", username: "jessemcready", email: "jessemcready@gmail.com")
+  
 puts "done with users"
 
 puts "creating repositories"

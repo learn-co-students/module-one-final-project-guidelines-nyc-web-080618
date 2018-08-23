@@ -91,9 +91,7 @@ class User < ActiveRecord::Base
       puts "#{i}. #{star_repo.starred_repository.name}"
     end
   end
-end
 
-  end # end get_repos_by_languages
 
   def follow_user(username)
     user = User.find_by(username: username)
