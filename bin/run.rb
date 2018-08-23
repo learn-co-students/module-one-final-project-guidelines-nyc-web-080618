@@ -2,7 +2,7 @@ require_relative '../config/environment'
 require 'commander/import'
 
 def read_menu(current_user)
-  system "clear" or system "cls"
+  # system "clear" or system "cls"
   puts "What info would you like"
   puts "1. Read a user"
   puts "2. Read a repository"
@@ -48,7 +48,7 @@ def read_menu(current_user)
 end # end create_menu
 
 def create_menu(current_user)
-  system "clear" or system "cls"
+  # system "clear" or system "cls"
 
   puts "What are we doing today? Exit to exit"
   puts "1. Create Repository"
@@ -96,6 +96,7 @@ def create_menu(current_user)
         found = true
       else
         puts "Username not found."
+      end
     end
   when "exit"
     return
@@ -103,6 +104,52 @@ def create_menu(current_user)
     puts "Please enter a valid choice."
   end
 end # end create_menu
+
+def update_menu(current_user)
+  # system "clear" or system "cls"
+
+  puts "What are we updating today? Exit to exit"
+  puts "1. User"
+  puts "2. Repository"
+  update_input = gets.chomp
+
+  case update_input
+  when "1"
+    puts "What attribute would you like to update?"
+    puts "1. Name"
+    puts "2. Username"
+    puts "3. Email"
+    attribute_input = gets.chomp
+    case attribute_input
+    when "1"
+      name = ask("Name: ")
+      current_user.update(name: name)
+    when "2"
+      username = ask("Username: ")
+      current_user.update(username: username)
+    when "3"
+      email = ask("Email: ")
+      current_user.update(email: email)
+    else
+      "Not a valid attribute"
+    end
+  when "2"
+    puts "What repository are you looking to change"
+    repo_name = gets.chomp
+    repo = Repository.find_by(name: repo_name)
+    if repo
+      puts "What would you like to rename it?"
+      new_name = gets.chomp
+      repo.update(name: new_name)
+    else
+      puts "Repo does not exist"
+    end
+  when "exit"
+    return
+  else
+    puts "Invalid choice."
+  end
+end # end update_menu
 
 def main
   puts "Welcome!"
@@ -126,18 +173,13 @@ def main
     case input
     when "1" ### CREATE
       create_menu(current_user)
-      system "clear" or system "cls"
+      # system "clear" or system "cls"
     when "2" ### READ
       read_menu(current_user)
-      system "clear" or system "cls"
+      # system "clear" or system "cls"
     when "3" ### UPDATE
-      system "clear" or system "cls"
-      puts "What repository are you updating?"
-      name_input = gets.chomp
-      repo = Repository.find_by(name: name_input)
-      puts "What would you like to rename the repo?"
-      repo.update(name: gets.chomp)
-      puts repo
+      update_menu(current_user)
+      # system "clear" or system "cls"
     when "4" ### DESTROY
       system "clear" or system "cls"
       puts "Which repository are you deleting?"
@@ -146,7 +188,7 @@ def main
       repo.destroy
       puts "Repo deleted. Trust me"
     when "exit"
-      system "clear" or system "cls"
+      # system "clear" or system "cls"
       break
     else
       puts "Not a valid choice, try again.\n"
