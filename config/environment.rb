@@ -7,6 +7,7 @@ require 'yaml/store'
 require 'ostruct'
 require 'date'
 require 'faker'
+require 'terminal-table'
 
 
 Bundler.require

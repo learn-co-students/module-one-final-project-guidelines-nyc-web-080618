@@ -1,6 +1,6 @@
          EventChecker Explanation
 
-Welcome to EventChecker! This is our amazing searching engine for events held by different artists or in different cities. Users can definitly find their favorable events and save the events by using EventChecker.
+Welcome to EventChecker! This is our amazing searching engine for events held by different artists or in different cities. Users can definitely find their favorable events and save the events by using EventChecker.
 
 We have 3 many-to-many relationships in our model.
 

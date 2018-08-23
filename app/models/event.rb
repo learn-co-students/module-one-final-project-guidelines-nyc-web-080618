@@ -26,5 +26,9 @@ class Event < ActiveRecord::Base
     self.guest_stars.pluck(:name)
   end
 
+  def find_artist
+    self.artist.name 
+  end
+
 
 end
