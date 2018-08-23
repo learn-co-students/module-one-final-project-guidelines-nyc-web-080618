@@ -25,8 +25,8 @@ puts "done naming school"
 
 
 puts "feelings with emoji"
-Feeling.create(emoji: ":happy:", score: 5)
-Feeling.create(emoji: ":nervous:", score: 2)
-Feeling.create(emoji: ":sad:", score: 0)
-Feeling.create(emoji: ":crying:", score: 2)
+Feeling.create(emoji: "=D", score: 5)
+Feeling.create(emoji: ":-$", score: 2)
+Feeling.create(emoji: ">:(", score: 0)
+Feeling.create(emoji: ":'(", score: 2)
 puts "done with feelings"
