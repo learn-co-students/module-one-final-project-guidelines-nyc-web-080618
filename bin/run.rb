@@ -36,13 +36,13 @@ if teacher_search == nil
 end
 ##
 
-  description = get_description
-  feelings = gets_feeling_score.to_i
-  quality = gets_quality.to_i
-  easiness = gets_easiness.to_i
-  helpfulness = gets_helpfulness.to_i
-  rating = (quality + easiness + helpfulness + feelings)/4
-  Review.create(description: description, rating: rating, quality: quality, easiness: easiness, helpfulness: helpfulness, feelings: feelings, student_id: student.id, teacher_id: teacher_search.id)
+description = get_description
+feelings = gets_feeling_score.to_i
+quality = gets_quality.to_i
+easiness = gets_easiness.to_i
+helpfulness = gets_helpfulness.to_i
+rating = (quality + easiness + helpfulness + feelings)/4
+Review.create(description: description, rating: rating, quality: quality, easiness: easiness, helpfulness: helpfulness, feelings: feelings, student_id: student.id, teacher_id: teacher_search.id)
 
 
 

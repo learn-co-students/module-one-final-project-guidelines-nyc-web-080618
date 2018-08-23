@@ -13,4 +13,5 @@ def get_school_data
   school_hash.each do |school|
     School.where(name: school["locname"], location: school["address"]).first_or_create
   end
+  
 end
