@@ -53,5 +53,5 @@ Projects need to be approved prior to launching into them, so take some time to 
 - How do I turn off my SQL logger?
 ```ruby
 # in config/environment.rb add this line:
-ActiveRecord::Base.logger = nil
+# ActiveRecord::Base.logger = nil
 ```
