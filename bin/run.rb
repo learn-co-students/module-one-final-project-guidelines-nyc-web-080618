@@ -1,5 +1,11 @@
 require_relative '../config/environment'
+<<<<<<< HEAD
 require_relative '../lib/command_line_interface'
+=======
+require_relative "../lib/api_communicator.rb"
+require_relative "../lib/command_line_interface.rb"
+
+>>>>>>> c8807eb054250d51cf81701904064ef6c9ee660f
 
 student_name = get_name
 student_school_name = get_school_name
@@ -34,13 +40,13 @@ if teacher_search == nil
 end
 ##
 
-  description = get_description
-  feelings = gets_feeling_score.to_i
-  quality = gets_quality.to_i
-  easiness = gets_easiness.to_i
-  helpfulness = gets_helpfulness.to_i
-  rating = (quality + easiness + helpfulness + feelings)/4
-  Review.create(description: description, rating: rating, quality: quality, easiness: easiness, helpfulness: helpfulness, feelings: feelings, student_id: student.id, teacher_id: teacher_search.id)
+description = get_description
+feelings = gets_feeling_score.to_i
+quality = gets_quality.to_i
+easiness = gets_easiness.to_i
+helpfulness = gets_helpfulness.to_i
+rating = (quality + easiness + helpfulness + feelings)/4
+Review.create(description: description, rating: rating, quality: quality, easiness: easiness, helpfulness: helpfulness, feelings: feelings, student_id: student.id, teacher_id: teacher_search.id)
 
 
   

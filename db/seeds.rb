@@ -11,17 +11,10 @@ puts "done with naming students"
 
 
 puts "naming teachers"
-Teacher.create(name: Faker::GreekPhilosophers.name, school_id: rand(1..3))
-Teacher.create(name: Faker::GreekPhilosophers.name, school_id: rand(1..3))
-Teacher.create(name: Faker::GreekPhilosophers.name, school_id: rand(1..3))
+Teacher.create(name: Faker::GreekPhilosophers.name, school_id: rand(1..School.count))
+Teacher.create(name: Faker::GreekPhilosophers.name, school_id: rand(1..School.count))
+Teacher.create(name: Faker::GreekPhilosophers.name, school_id: rand(1..School.count))
 puts "done with naming teachers"
-
-
-puts "naming school"
-School.create(name: Faker::University.name, location: Faker::HeyArnold.location)
-School.create(name: Faker::University.name, location: Faker::HeyArnold.location)
-School.create(name: Faker::University.name, location: Faker::HeyArnold.location)
-puts "done naming school"
 
 
 puts "feelings with emoji"
