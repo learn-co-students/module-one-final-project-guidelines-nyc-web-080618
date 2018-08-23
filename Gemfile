@@ -8,3 +8,4 @@ gem "require_all"
 gem "faker"
 gem 'commander'
 gem "terminal-table"
+gem 'tty-prompt'

@@ -17,7 +17,6 @@ puts "creating users"
 
   User.create(name: "Justin", username: "jwang", email: "jwang138@binghamton.edu")
   User.create(name: "Jesse", username: "jessemcready", email: "jessemcready@gmail.com")
-
 puts "done with users"
 
 puts "creating repositories"
@@ -25,6 +24,7 @@ puts "creating repositories"
     user.create_repo(Faker::MichaelScott.unique.quote)
   end
   User.find_by(username: "jwang").create_repo("cool repo")
+  User.find_by(username: "jessemcready").create_repo("my repo is better than justins")
 puts "done with repositories"
 
 puts "creating languages"

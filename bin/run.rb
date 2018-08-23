@@ -1,8 +1,10 @@
 require_relative '../config/environment'
 require_relative './menu'
 require 'commander/import'
+require 'tty-prompt'
 
 def main
+  prompt = TTY::Prompt.new
   puts "Welcome!"
   speak ""
 
@@ -15,35 +17,33 @@ def main
   current_user = User.find_by(name: "Justin")
   speak "Hello #{name}"
   input = ""
-  while input != "exit"
-    puts "What would you like to do? Type exit to exit"
-    puts "1. Create"
-    puts "2. Read"
-    puts "3. Update"
-    puts "4. Delete"
-    input = gets.chomp
+  while input != "Exit"
+    choices = [
+      'Create',
+      'Read',
+      'Update',
+      'Delete',
+      'Exit'
+    ]
+    input = prompt.select('What are we doing today?', choices, cycle: true, per_page: 10)
     case input
-    when "1" ### CREATE
+    when "Create" ### CREATE
       create_menu(current_user)
       # system "clear" or system "cls"
-    when "2" ### READ
+    when "Read" ### READ
       readExit = false
       while !readExit
         readExit = read_menu(current_user)
       end
       # system "clear" or system "cls"
 
-    when "3" ### UPDATE
+    when "Update" ### UPDATE
       update_menu(current_user)
       # system "clear" or system "cls"
-    when "4" ### DESTROY
+    when "Delete" ### DESTROY
       # system "clear" or system "cls"
-      puts "Which repository are you deleting?"
-      name_input = gets.chomp
-      repo = Repository.find_by(name: name_input)
-      repo.destroy
-      puts "Repo deleted. Trust me"
-    when "exit"
+      delete_menu(current_user)
+    when "Exit"
       # system "clear" or system "cls"
       break
     else
