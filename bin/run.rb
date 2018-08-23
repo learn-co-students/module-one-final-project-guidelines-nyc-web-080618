@@ -1,23 +1,20 @@
 require_relative '../config/environment'
 require_all 'app'
+require "faker"
+
+
   input = 0
   welcome
-
-  player = character_creation
-  # input = selections
-  # exec_selection(player, input)
-
-  while input != "6"
+  player = player_choose
+  puts"*********************************"
+  puts "Starting adventure for #{player.name} "
+        player.show_stats
+  puts"*********************************"
+  while input != "6" and player.hp > 0
     puts " "
-    # puts "entering loop #{player.name}"
-    # puts "ID: #{player.id}"
     player.reload
     input = selections
     exec_selection(player,input)
-    #puts " "
-    # puts "************************"
-    # puts "exiting loop #{player.name}"
-    # puts "ID: #{player.id}"
-
-
   end
+
+  puts Faker::GreekPhilosophers.quote
