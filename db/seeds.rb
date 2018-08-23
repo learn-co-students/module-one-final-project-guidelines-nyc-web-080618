@@ -52,3 +52,11 @@ puts "star some repos"
     user.star_repo(Repository.all.sample)
   end
 puts "done with stars"
+
+puts "make some forks"
+  User.all.each do |user|
+    user.fork_repo(Repository.all.sample)
+    user.fork_repo(Repository.all.sample)
+    user.fork_repo(Repository.all.sample)
+  end
+puts "done forking"

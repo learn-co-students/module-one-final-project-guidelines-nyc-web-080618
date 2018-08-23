@@ -26,7 +26,7 @@ def read_menu(current_user)
       userInput = gets.chomp
       user = User.find_by(username: userInput)
       if user
-        puts user.name
+        puts tp user.name
         foundUser = true
       else
         puts "#{userInput} does not exist."
@@ -46,14 +46,20 @@ def read_menu(current_user)
       end
     end
   when "Read your repositories"
-    puts "Here are your repositories..."
-    current_user.repositories.each_with_index do |my_repo, i|
-      puts "#{i+1}. #{my_repo.name}"
-    end
+    system "clear" or system "cls"
+    puts "Your Repositories:"
+    tp current_user.repositories
+    puts "\n"
   when "Read your forked repositories"
-    puts current_user.forks
+    system "clear" or system "cls"
+    puts "Your Forks:"
+    tp current_user.forks
+    puts "\n"
   when "Read users that forked your repositories"
-    puts current_user.users_that_forked_our_repos
+    system "clear" or system "cls"
+    puts "Users who forked your repositories:"
+    tp current_user.users_that_forked_our_repos
+    puts "\n"
   when "Read your starred repositories"
     current_user.my_starred_repositories
   when "Search your repositories by language"
@@ -65,9 +71,10 @@ def read_menu(current_user)
       if foundLangs.empty?
         puts "No repositories found using #{langInput}."
       else
-        foundLangs.each_with_index do |found_repo_lang, i|
-          puts "#{i+1}. #{found_repo_lang.name}"
-        end
+        system "clear" or system "cls"
+        puts "Your repositories using '#{langInput}':"
+        tp foundLangs
+        puts "\n"
       end # end foundLangs.empty?
     else
       puts "#{langInput} not found."
