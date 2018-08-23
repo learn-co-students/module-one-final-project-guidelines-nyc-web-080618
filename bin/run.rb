@@ -70,13 +70,32 @@ def show_events(value)
   if value == nil
     invalid_input
     load 'bin/run.rb'
-  elsif value.events.count==0
+  elsif value.events.count == 0
     puts "This city/artist doesn't have any events,please check others"
     return "empty"
   else
     puts value.events.map {|event|
-    "Event name: #{event.name}, Time: #{event.time}, Price: #{event.price},
-    City: #{event.city.name}, Aritst: #{event.artist.name}, GuestStar: #{event.find_guest_star}"}
+      table(event.name, event.time, event.price, event.city.name, event.artist.name, event.find_guest_star)
+    }
+    # "Event name: #{event.name}, Time: #{event.time}, Price: #{event.price},
+    # City: #{event.city.name}, Aritst: #{event.artist.name}, GuestStar: #{event.find_guest_star}"}
+  end
+end
+
+  def table(name, time, price, city, artist, guest)
+     table = Terminal::Table.new do |t|
+       t << ["Event name", name]
+       t << :separator
+       t.add_row ["Event Time", time]
+       t.add_separator
+       t.add_row ["Event Price", price]
+       t.add_separator
+       t.add_row ["Event City", city]
+       t.add_separator
+       t.add_row ["Artist", artist]
+       t.add_separator
+       t.add_row ["Guest", guest]
+       t.add_separator
   end
 end
 
@@ -84,7 +103,7 @@ def save_event
   puts "Please enter the name of the event you want to save"
   event_name = gets.chomp
   event = Event.find_by(name: event_name)
-  if event==nil
+  if event == nil
     invalid_input
   else
     UserEvent.create!(user_id: $user.id, event_id: event.id)
@@ -155,7 +174,9 @@ def main_menu
              puts $user.events.pluck(:name,:time,:price)
            end
        elsif choice == "4"
-           puts "Thank you! Bye"
+         a = Artii::Base.new :font => 'slant'
+         puts a.asciify('Thank you ! Bye').red
+           # puts "Thank you! Bye"
            break
        else
            invalid_input
