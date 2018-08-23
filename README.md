@@ -1,4 +1,4 @@
-# Student Emotion Questionnaire
+# Student Feelings Questionnaire
 
 ## About
 * This CLI app is a survey intended for students as the primary user to complete on a weekly basis about how they feel and how their emotions provide another form of feedback for the students' progress in their course. The purpose for this app is to give Students the opportunity to express how they feel and also give Teachers genuine feedback about their student.  
