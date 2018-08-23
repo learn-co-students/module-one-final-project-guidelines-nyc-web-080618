@@ -1,10 +1,10 @@
-EventChecker Explanation
+         EventChecker Explanation
 
-Welcome to EventChecker! This is our amazing searching engine for events hold by different artists or in different cities. Users can definitly find their favorable event and save the event by using our EventChecker.
+Welcome to EventChecker! This is our amazing searching engine for events held by different artists or in different cities. Users can definitly find their favorable events and save the events by using EventChecker.
 
 We have 3 many-to-many relationships in our model.
 
-1. We have many Artists, and many Cities. The joint table of Artist class and Ciry class is Event class. In each event, we can track which artist holding this event and the location of the event.
+1. We have many Artists, and many Cities. The joint table of Artist class and Ciry class is Event class. In each event, we can track which artist will hold this event and the location of the event.
 
 2. As we have many Events and many GuestStar, the joint table of these two classes is Invitation class.
 

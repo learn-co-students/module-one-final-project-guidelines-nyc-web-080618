@@ -9,6 +9,6 @@ class Artist < ActiveRecord::Base
         event.find_guest_star }.flatten
     end
 
-
+    
 
 end

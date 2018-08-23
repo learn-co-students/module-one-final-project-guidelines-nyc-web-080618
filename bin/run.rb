@@ -9,9 +9,6 @@
 #     puts "hello #{user.name}"
 #   end
 #
-#   def show_event(value)
-#   
-#   end
 #
 #     puts city.events.map{|event|
 #       "Event name:#{event.name}, Time:#{event.time}, Price:#{event.price}, Artist:
@@ -73,13 +70,13 @@ def show_events(value)
   if value == nil
     invalid_input
     load 'bin/run.rb'
-  elsif value.events.count == 0
-    puts "This city doesn't have any events,please check other city"
-    load 'bin/run.rb'
+  elsif value.events.count==0
+    puts "This city/artist doesn't have any events,please check others"
+    return "empty"
   else
     puts value.events.map {|event|
-    "Event name:#{event.name}, Time:#{event.time}, Price:#{event.price},
-    City:#{event.city.name}, Artist:#{event.artist.name}, Guest Star: #{event.find_guest_star}"}
+    "Event name: #{event.name}, Time: #{event.time}, Price: #{event.price},
+    City: #{event.city.name}, Aritst: #{event.artist.name}, GuestStar: #{event.find_guest_star}"}
   end
 end
 
@@ -100,14 +97,14 @@ def welcome
   puts "Please enter your name!"
   user_name = gets.chomp.to_s
   $user = User.find_or_create_by!(name:user_name)
-  puts "hello #{$user.name}"
+  puts "Hello #{$user.name}"
 end
 
 def main_menu
     while true
-      puts "Please select 1.city  2.Artist 3.your saved events 4.exit to browse all our events"
-      puts "Please enter your option "
-      choice=gets.chomp
+      puts "Please select 1.City  2.Artist  3.Your saved events 4.Exit"
+      puts "Please enter your option"
+      choice = gets.chomp
 
       if choice == "1"
           puts City.pluck(:name)
@@ -119,34 +116,46 @@ def main_menu
               puts "Please enter the City's name"
               city_name = gets.chomp
               city = City.find_by(name: city_name)
-              show_events(city)
-              save_event
+
+              if show_events(city) != "empty"
+                 save_event
+              else
+                 next
+              end
+
           else
               next
           end
        elsif choice == "2"
             puts Artist.pluck(:name)
-            puts "Please select 1.select from city 2. go back to main menu "
+            puts "Please select:"
+            puts "To select an artist, enter 1."
+            puts "Go back to main menu, enter 2 "
             option = gets.chomp
-            if option == "1"
+            if option=="1"
                 puts "Please enter the Aritst's name"
                 artist_name = gets.chomp
                 artist = Artist.find_by(name: artist_name)
-                show_events(artist)
-                save_event
+
+                if show_events(artist)!="empty"
+                   save_event
+                else
+                   next
+                end
+
             else
                 next
             end
        elsif choice == "3"
-           if $user.events.count==0
+           if $user.events.count == 0
              puts "You don't have any saved events"
            else
              puts "Your saved events list"
              puts ""
              puts $user.events.pluck(:name,:time,:price)
            end
-       elsif choice=="4"
-           puts "Thank you!Bye"
+       elsif choice == "4"
+           puts "Thank you! Bye"
            break
        else
            invalid_input
