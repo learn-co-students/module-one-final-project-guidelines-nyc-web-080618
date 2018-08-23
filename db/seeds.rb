@@ -39,3 +39,11 @@ puts "creating branches"
     Branch.create(name: Faker::SiliconValley.unique.company, repository_id: Repository.all.sample.id)
   end
 puts "done with branches"
+
+puts "star some repos"
+  User.all.each do |user|
+    user.star_repo(Repository.all.sample)
+    user.star_repo(Repository.all.sample)
+    user.star_repo(Repository.all.sample)
+  end
+puts "done with stars"
