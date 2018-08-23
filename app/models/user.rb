@@ -17,8 +17,6 @@ class User < ActiveRecord::Base
 
   has_many :stars
 
-  # has_many :forks, through: :repositories
-
   has_many :followers, :foreign_key => :follower_id
   has_many :followees, :class_name => "User", :foreign_key => :followee_id
 
@@ -76,16 +74,15 @@ class User < ActiveRecord::Base
       end # end each
     end # end each
     found_repos
-
-  end
+  end # end get_repos_by_languages
 
   def star_repo(repo)
     if (Star.find_by(user_id: self.id, starred_repository_id: repo.id))
       puts "You already starred this repository!"
     else
       Star.create(user_id: self.id, starred_repository_id: repo.id)
-    end
-  end
+    end # end if
+  end # end star_repo
 
   def my_starred_repositories
     self.stars.each_with_index do |star_repo, i|
