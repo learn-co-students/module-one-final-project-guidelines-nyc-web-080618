@@ -12,7 +12,7 @@ puts "done clearing"
 
 puts "creating users"
   5.times do |i|
-    User.create(name: Faker::Name.unique.name)
+    User.create(name: Faker::Name.unique.name, username: Faker::LordOfTheRings.unique.character, email: Faker::Internet.unique.email)
   end
 puts "done with users"
 
