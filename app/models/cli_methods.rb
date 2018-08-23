@@ -1,8 +1,9 @@
-
+require "faker"
 
 
 def welcome
   puts "Welcome to our awesome game"
+  puts Faker::GreekPhilosophers.quote
 end
 
 def selections
@@ -32,30 +33,6 @@ def character_creation
   player
 end
 
-# def quest_interface(player)
-#   difficulty = [1, player.power/3].max
-#   if player.get_recommended_quests(difficulty).size == 0
-#     puts "You have completed all recommended quests!!!"
-#   else
-#     puts "Here are quests we recommend for Player Attack: #{player.power}"
-#     player.print_quests(difficulty)
-#     puts "Select a quest number"
-#     puts "Number:"
-#     selection = gets.chomp.to_i
-#
-#     puts "You have completed: #{player.get_recommended_quests(difficulty)[selection-1].title}"
-#     puts " "
-#     puts "Time for your reward adventurer!!!"
-#     available_weapons = player.get_available_weapons(difficulty)
-#     player.quest_selection(selection, difficulty)
-#     player.weapon_reward(available_weapons)
-#   end
-
-
-
-#end
-
-
 
 def exec_selection(player, selection)
   if selection == "1"
@@ -71,7 +48,7 @@ def exec_selection(player, selection)
   elsif selection == "5"
     player.show_all_weapons
   elsif selection == "6"
-    puts "bye"
+    puts Faker::GreekPhilosophers.quote
   else
     puts  "Invalid selection"
 

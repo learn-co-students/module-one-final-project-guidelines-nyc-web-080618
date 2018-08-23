@@ -5,7 +5,6 @@ class CharacterWeapon  < ActiveRecord::Base
   belongs_to :weapon
 
   def self.new_character_weapon(character_id, weapon_id)
-    puts "created a new characterweapon"
     self.create(character_id: character_id, weapon_id: weapon_id)
   end
 

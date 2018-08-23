@@ -9,15 +9,15 @@ require_all 'app'
 
   while input != "6"
     puts " "
-    puts "entering loop #{player.name}"
-    puts "ID: #{player.id}"
+    # puts "entering loop #{player.name}"
+    # puts "ID: #{player.id}"
     player.reload
     input = selections
     exec_selection(player,input)
     #puts " "
-    puts "************************"
-    puts "exiting loop #{player.name}"
-    puts "ID: #{player.id}"
+    # puts "************************"
+    # puts "exiting loop #{player.name}"
+    # puts "ID: #{player.id}"
 
 
   end
