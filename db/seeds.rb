@@ -17,13 +17,14 @@ puts "creating users"
 
   User.create(name: "Justin", username: "jwang", email: "jwang138@binghamton.edu")
   User.create(name: "Jesse", username: "jessemcready", email: "jessemcready@gmail.com")
-  
+
 puts "done with users"
 
 puts "creating repositories"
   User.all.each do |user|
     user.create_repo(Faker::MichaelScott.unique.quote)
   end
+  User.find_by(username: "jwang").create_repo("cool repo")
 puts "done with repositories"
 
 puts "creating languages"

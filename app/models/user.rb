@@ -1,4 +1,5 @@
 require 'pry'
+require 'commander/import'
 class User < ActiveRecord::Base
   validates :name, presence: true
   validates :username, presence: true
@@ -88,7 +89,9 @@ class User < ActiveRecord::Base
 
   def my_starred_repositories
     self.stars.each_with_index do |star_repo, i|
-      puts "#{i}. #{star_repo.starred_repository.name}"
+      puts "#{i+1}. #{star_repo.starred_repository.name}"
+      speak "#{i+1}. #{star_repo.starred_repository.name}"
+      sleep(5)
     end
   end
 
