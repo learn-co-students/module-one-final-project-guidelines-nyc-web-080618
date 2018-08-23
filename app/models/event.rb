@@ -23,7 +23,7 @@ class Event < ActiveRecord::Base
   end
 
   def find_guest_star
-    self.guest_stars
+    self.guest_stars.pluck(:name)
   end
 
 
