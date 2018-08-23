@@ -1,64 +1,6 @@
 require_relative '../config/environment'
-
-
-def get_name
-  puts "Hey, What is your full name?"
-  user_name = gets.chomp
-end
-
-def get_teacher_name
-  puts "Great! Who is your teacher?"
-  user_teacher = gets.chomp
-end
-
-def get_school_name
-  puts "What school do you attend?"
-  user_school = gets.chomp
-end
-
-def gets_quality
-  puts "On a scale of 1-5, how would you rate the quality of this teacher?"
-  gets.chomp
-end
-
-def gets_easiness
-  puts "On a scale of 1-5, how would you rate the easiness of this teacher?"
-  gets.chomp
-end
-
-def gets_helpfulness
-  puts "On a scale of 1-5, how would you rate the helpfulness of this teacher?"
-  gets.chomp
-end
-
-def get_description
-  puts "How else can you describe your experience with your Teacher?"
-  gets.chomp
-end
-
-
-def gets_feeling_score
-  puts "How do you feel? Please select an emoji."
-  list_of_feelings = Feeling.all
-  counter = 1
-  list_of_feelings.each do |feeling|
-    puts "#{counter}. #{feeling.emoji}"
-    counter += 1
-  end
-  emoji = gets.chomp
-  feeling = Feeling.find_by(emoji: emoji)
-  feeling.score
-end
-
-# def create_review
-#   description = get_description
-#   feelings = gets_feeling_score.to_i
-#   quality = gets_quality.to_i
-#   easiness = gets_easiness.to_i
-#   helpfulness = gets_helpfulness.to_i
-#   rating = (quality + easiness + helpfulness + feelings)/4
-#   Review.create(description: description, rating: rating, quality: quality, easiness: easiness, helpfulness: helpfulness, feelings: feelings, student_id: student.id, teacher_id: teacher_search.id)
-# end
+require_relative "../lib/api_communicator.rb"
+require_relative "../lib/command_line_interface.rb"
 
 
 student_name = get_name
