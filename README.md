@@ -13,7 +13,7 @@ This app includes the following functionalities:
 
 
 #### Installation Instructions
-1.
-
-
-### App requirements:
+1. Clone this repository
+2. run bundle
+3. open the terminal
+4. run ```ruby bin/run.rb```
