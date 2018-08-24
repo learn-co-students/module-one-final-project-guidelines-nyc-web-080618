@@ -14,6 +14,7 @@ def main
   speak "Cow says who?"
   sleep(2)
   speak "No a cow says mooooooooooooooooooooooooooooo"
+  sleep(2)
 
   username = prompt.ask("Username: ", required: true)
 
