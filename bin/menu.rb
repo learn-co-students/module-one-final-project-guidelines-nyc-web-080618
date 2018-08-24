@@ -243,7 +243,8 @@ def delete_menu(current_user)
   when "Unfollow User"
     puts "Who are you unfollowing?"
     user = User.find_by(username: gets.chomp)
-    if user
+    follow_relationship = Follower.find_by(followee_id: user.id)
+    if follow_relationship
       relationship = current_user.followers.find_by(follower_id: current_user.id, followee_id: user.id)
       Follower.destroy(relationship.id)
       current_user.reload
