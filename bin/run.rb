@@ -60,6 +60,7 @@
 ENV["ACTIVE_RECORD_ENV"] ||= "development"
 require_relative '../config/environment'
 
+
 def invalid_input
   puts "You entered the wrong option please try again"
   puts "Please enter your option correctly "
@@ -75,7 +76,7 @@ def show_events(value)
     return "empty"
   else
     puts value.events.map {|event|
-      table(event.name, event.time, event.price, event.city.name, event.artist.name, event.find_guest_star)
+      table(event.name, event.time, event.price, event.city.name, event.artist.name, event.find_guest_star.join(", "))
     }
     # "Event name: #{event.name}, Time: #{event.time}, Price: #{event.price},
     # City: #{event.city.name}, Aritst: #{event.artist.name}, GuestStar: #{event.find_guest_star}"}
@@ -96,6 +97,17 @@ end
        t.add_separator
        t.add_row ["Guest", guest]
        t.add_separator
+  end
+end
+
+def event_table(name, time, price)
+  table = Terminal::Table.new do |t|
+    t << ["Event name", name]
+    t << :separator
+    t.add_row ["Event Time", time]
+    t.add_separator
+    t.add_row ["Event Price", price]
+    t.add_separator
   end
 end
 
@@ -123,13 +135,23 @@ end
 
 def main_menu(user)
     while true
-      puts "Please select 1.City  2.Artist  3.Your saved events 4.Exit"
+      puts "Please select"
+      puts "1.City"
+      puts "2.Artist"
+      puts "3.Your saved events"
+      puts "4.Exit".red
       puts "Please enter your option"
       choice = gets.chomp
 
       if choice == "1"
-          puts City.pluck(:name)
+          cities = City.pluck(:name)
+          i = 1
+          while i < cities.length
+            puts "#{i}. #{cities[i]}"
+            i += 1
+          end
           puts "Please select:"
+          puts ""
           puts "To select a city, enter 1."
           puts "Go back to main menu, enter 2 "
           option = gets.chomp
@@ -148,8 +170,14 @@ def main_menu(user)
               next
           end
        elsif choice == "2"
-            puts Artist.pluck(:name)
+            artists =  Artist.pluck(:name)
+            i = 1
+            while i < artists.length
+              puts "#{i}. #{artists[i]}"
+              i += 1
+            end
             puts "Please select:"
+            puts ""
             puts "To select an artist, enter 1."
             puts "Go back to main menu, enter 2 "
             option = gets.chomp
@@ -158,7 +186,7 @@ def main_menu(user)
                 artist_name = gets.chomp
                 artist = Artist.find_by(name: artist_name)
 
-                if show_events(artist)!="empty"
+                if show_events(artist)!= "empty"
                    save_event(user)
                 else
                    next
@@ -173,7 +201,10 @@ def main_menu(user)
            else
              puts "Your saved events list"
              puts ""
-             puts user.events.pluck(:name,:time,:price)
+
+             all_events = user.events
+             puts all_events.map {|event| event_table(event.name, event.time, event.price)}
+
              puts "Enter 1 to return to main manu"
              puts "Enter 2 to delete your saved event"
              option = gets.chomp

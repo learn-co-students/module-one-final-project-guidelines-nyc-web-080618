@@ -8,6 +8,7 @@ require 'ostruct'
 require 'date'
 require 'faker'
 require 'terminal-table'
+require 'colorize'
 
 
 Bundler.require
