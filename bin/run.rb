@@ -7,7 +7,7 @@ def main
   puts a.asciify('Welcome to FlatHub!').light_white.on_black
   speak ""
 
-  username = ask("Username: ")
+  username = prompt.ask("Username: ", required: true)
 
   current_user = nil
 
@@ -16,9 +16,9 @@ def main
     puts a.asciify("Welcome back #{current_user.username}").light_white.on_black
   else
     puts "We don't know you yet, give us some information about yourself."
-    username = ask("Username: ")
-    name = ask("Name: ")
-    email = ask("Email: ")
+    username = prompt.ask("Username: ", required: true)
+    name = prompt.ask("Name: ", required: true)
+    email = prompt.ask("Email: ", required: true) { |q| q.validate :email }
     current_user = User.create(name: name, username: username, email: email)
     puts a.asciify("Nice to meet you, #{current_user.name}.").light_white.on_black
   end
