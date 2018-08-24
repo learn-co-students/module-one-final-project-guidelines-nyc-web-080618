@@ -59,7 +59,7 @@ def read_menu(current_user)
     tp current_user.users_that_forked_our_repos
     puts "\n"
   when "Read your starred repositories"
-    current_user.my_starred_repositories
+    tp current_user.my_starred_repositories, "name"
   when "Search your repositories by language"
     puts "What language are you looking for?"
     langInput = gets.chomp # string
@@ -78,9 +78,9 @@ def read_menu(current_user)
       puts "#{langInput} not found."
     end # end langObj
   when "See your followers"
-    puts current_user.my_followers
+    tp current_user.my_followers, "name", "username", "email"
   when "See users you follow"
-    puts current_user.users_i_follow
+    tp current_user.users_i_follow, "name", "username", "email"
   when "Exit"
     return true
   else
@@ -244,7 +244,8 @@ def delete_menu(current_user)
     puts "Who are you unfollowing?"
     user = User.find_by(username: gets.chomp)
     if user
-      current_user.followers.where(follower_id: current_user.id, followee_id: user.id).destroy
+      relationship = current_user.followers.find_by(follower_id: current_user.id, followee_id: user.id)
+      Follower.destroy(relationship.id)
       current_user.reload
     else
       puts "You don't follow that user."
@@ -253,7 +254,7 @@ def delete_menu(current_user)
     puts "Repository name?"
     repo = Repository.find_by(name: gets.chomp)
     if repo
-      current_user.stars.where(starred_repository_id: repo.id).destroy
+      current_user.stars.find_by(starred_repository_id: repo.id).destroy
       current_user.reload
     else
       puts "You don't star that repo."

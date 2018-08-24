@@ -85,10 +85,13 @@ class User < ActiveRecord::Base
   end # end star_repo
 
   def my_starred_repositories
-    self.stars.each_with_index do |star_repo, i|
-      puts "#{i+1}. #{star_repo.starred_repository.name}"
-      speak "#{i+1}. #{star_repo.starred_repository.name}"
-      sleep(5)
+    # self.stars.each_with_index do |star_repo, i|
+    #   puts "#{i+1}. #{star_repo.starred_repository.name}"
+    #   speak "#{i+1}. #{star_repo.starred_repository.name}"
+    #   sleep(5)
+    # end
+    stars.map do |star|
+      star.starred_repository
     end
   end
 
@@ -113,15 +116,3 @@ class User < ActiveRecord::Base
   end # end users_i_follow
 
 end # end class User
-
-# ^^^^ test data get_repos_by_languages ^^^^
-# repo = Repository.find(94)
-# UserRepository.find_by(repository_id: repo.id)
-# user = User.find(2)
-# lang = Language.find(7)
-# user.get_repos_by_languages(lang)
-
-# repo = Repository.create(name: "MEH")
-# user1 = User.create(name: "Bleh")
-# user2 = User.create(name: "Buh")
-# user1.fork_repo(repo)
