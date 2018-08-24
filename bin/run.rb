@@ -99,27 +99,29 @@ end
   end
 end
 
-def save_event
+def save_event(user)
   puts "Please enter the name of the event you want to save"
   event_name = gets.chomp
   event = Event.find_by(name: event_name)
   if event == nil
     invalid_input
   else
-    UserEvent.create!(user_id: $user.id, event_id: event.id)
+    UserEvent.create!(user_id: user.id, event_id: event.id)
     puts "Event is saved successfully"
   end
 end
 
+
 def welcome
   puts "Hello! Welcome to EventChecker!"
   puts "Please enter your name!"
-  user_name = gets.chomp.to_s
-  $user = User.find_or_create_by!(name:user_name)
-  puts "Hello #{$user.name}"
+  user_name = gets.chomp
+  user = User.find_or_create_by!(name:user_name)
+  puts "Hello #{user.name}"
+  user
 end
 
-def main_menu
+def main_menu(user)
     while true
       puts "Please select 1.City  2.Artist  3.Your saved events 4.Exit"
       puts "Please enter your option"
@@ -137,7 +139,7 @@ def main_menu
               city = City.find_by(name: city_name)
 
               if show_events(city) != "empty"
-                 save_event
+                 save_event(user)
               else
                  next
               end
@@ -157,7 +159,7 @@ def main_menu
                 artist = Artist.find_by(name: artist_name)
 
                 if show_events(artist)!="empty"
-                   save_event
+                   save_event(user)
                 else
                    next
                 end
@@ -166,17 +168,17 @@ def main_menu
                 next
             end
        elsif choice == "3"
-           if $user.events.count == 0
+           if user.events.count == 0
              puts "You don't have any saved events"
            else
              puts "Your saved events list"
              puts ""
-             puts $user.events.pluck(:name,:time,:price)
+             puts user.events.pluck(:name,:time,:price)
              puts "Enter 1 to return to main manu"
              puts "Enter 2 to delete your saved event"
              option = gets.chomp
              if option == "2"
-                $user.destroy
+                user.destroy
                 puts "You have successfully deleted your saved events"
              else
                next
@@ -196,5 +198,7 @@ end
 
 
 
-welcome
-main_menu
+
+user=welcome
+
+main_menu(user)
