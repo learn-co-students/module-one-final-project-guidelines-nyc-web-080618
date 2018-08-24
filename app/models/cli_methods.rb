@@ -26,12 +26,12 @@ def character_prompt
   puts "1. New User".italic
   puts "2. Existing Adventurer".italic
   puts ""
-  puts "Selection:"
+  puts "Selection:".bold.white.on_light_blue
 end
 
 #standard selection screen w/numbered options
 def selections
-  puts "Here Are Your Options".bold.underline
+  puts "Here Are Your Options".bold.blue.on_light_green
   puts "1. Show Stats".italic
   puts "2. Show Weapons".italic
   puts "3. Show Completed Quests".italic
@@ -40,15 +40,14 @@ def selections
   puts "6. Exit Game".italic
   puts ""
   puts ""
-  puts "Your Selection, Sire?".bold.yellow
+  puts "Your Selection, Sire?".bold.white.on_light_blue
   input = gets.chomp
 end
 
 #method for creating a new character
 def character_creation
-  puts "Please Enter Your Character Name"
-  puts " "
-  puts "Name:"
+  puts "Please Enter Your Character Name".bold.white.on_light_blue
+  puts "Name:".bold.white.on_light_blue
 
 #use input of desired character name to instantiate new character object
   input = gets.chomp
@@ -60,7 +59,7 @@ def character_creation
 
 
 #display object ID so player can return to game in the future
-  puts "PLEASE REMEMBER YOUR ID".bold.red
+  puts "PLEASE REMEMBER YOUR ID         ".bold.red.on_light_yellow
   puts "ID #{player.id}".green.bold
   player   #return the new character instance
 end
@@ -74,9 +73,7 @@ def exec_selection(player, selection)
 
 #player want to see weapons
   elsif selection == "2"
-    puts ""
-    puts "Here Are Your Weapons:".bold.blue
-    puts " "
+
     player.show_all_weapons
 
 #player wants to see his completed quests
@@ -117,7 +114,7 @@ def find_existing_character
 #see if the character with ID has been destroyed by another player
   elsif
     input.to_i < Character.all.last.id
-    puts "Your character has been killed!!!!".red
+    puts "Your character has been killed!!!!".bold.white.on_red
     puts Artii::Base.new.asciify "Sorry"
 
 #re-prompt the user

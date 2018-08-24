@@ -8,13 +8,13 @@ require "colorize"
 
   input = 0
 
-#welcome screen and player start screen  
+#welcome screen and player start screen
   welcome
   player = player_choose
 
 #display character name and stats to show that he is starting the game
   puts"*********************************"
-  puts "Starting Adventure For" + " #{player.name}".blue.bold
+  puts "Starting Adventure For #{player.name} ".bold.blue.on_light_yellow
         player.show_stats
   puts"*********************************"
 

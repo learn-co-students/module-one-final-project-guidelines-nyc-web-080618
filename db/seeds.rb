@@ -2,11 +2,11 @@ require "pry"
 require "faker"
 
 
-  ###characters
-  # puts "making characters"
-  # 5.times do
-  # Character.create(name: Faker::WorldOfWarcraft.unique.hero)
-  # end
+  ##characters
+  puts "making characters"
+  5.times do
+  Character.create(name: Faker::Ancient.unique.god, hp:50, power:1)
+  end
 
   #puts "done with characters"
   ######quests
