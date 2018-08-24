@@ -1,5 +1,4 @@
-
-# Student Feelings Questionnaire
+# Rate my Teachers App
 
 ## About
 * This CLI app is a survey intended for students as an opportunity to express how they feel and also for Teachers to receive unique feedback about their student. The teacher review will give the Teacher the idea of how their feelings affect the students performance and take the necessary steps to help them improve if ratings are low

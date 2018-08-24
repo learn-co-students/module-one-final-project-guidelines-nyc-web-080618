@@ -1,60 +1,58 @@
 require_relative '../config/environment'
-<<<<<<< HEAD
-require_relative '../lib/command_line_interface'
-=======
 require_relative "../lib/api_communicator.rb"
 require_relative "../lib/command_line_interface.rb"
 
->>>>>>> c8807eb054250d51cf81701904064ef6c9ee660f
-
-student_name = get_name
-student_school_name = get_school_name
-
-##searching school##
-school_search = School.find_by(name: student_school_name) #must maintain a school table
-if school_search == nil
-  puts "School does not exist."
-  student_school_name = get_school_name
+welcome
+#gets student name, if student does not exist, create student
+student_name = gets_student_name
+student = Student.find_by(name: student_name)
+while student == nil
+  puts "We do not recognize you. Would you like to register?"
+  user_input = yes_or_no
+  if user_input == "y"
+    student = Student.create(name: student_name)
+  else
+    student_name = gets_student_name
+    student = Student.find_by(name: student_name)
+  end
 end
 
-student = Student.where(name: student_name, school_id: school_search.id).first_or_create
-##
 
-##printing the list of teachers##
-list_of_teachers = Teacher.where(school_id: school_search.id)
-puts "Please select a teacher to review."
-counter = 1
-list_of_teachers.each do |teacher|
-  puts "#{counter}. #{teacher.name}"
-  counter += 1
+  #gets school, if school does not exist, asks for location to create new school
+  school_name = gets_school_name
+  school = School.find_by(name: school_name)
+  while school == nil
+    puts "We do not recognize this school. Would you like to add?"
+    user_input = yes_or_no
+    if user_input == "y"
+      school_location = gets_school_location
+      school = School.create(name: school_name,location: school_location)
+    else
+      school_name = gets_school_name
+      school = School.find_by(name: school_name)
+    end
+  end
+
+##add school_id to student object if student was just created
+if student.school_id == nil || student.school_id != school.id
+  student.update(school_id: school.id)
 end
-###
 
-##searches teacher by name
-teacher_name = get_teacher_name
-
-teacher_search = Teacher.find_by(name: teacher_name)
-if teacher_search == nil
-  puts "Teacher does not exist."
-  teacher_name = get_teacher_name
+user_input = gets_command
+while user_input != "4"
+  case user_input
+  when "1"
+    student.create_review
+    user_input = continue?
+  when "2"
+    school.highest_rated_teacher
+    user_input = continue?
+  when "3"
+    school.lowest_rated_teacher
+    user_input = continue?
+  when "4"
+    puts "average rating for specific teacher"
+  when "5"
+    break
+  end
 end
-##
-
-description = get_description
-feelings = gets_feeling_score.to_i
-quality = gets_quality.to_i
-easiness = gets_easiness.to_i
-helpfulness = gets_helpfulness.to_i
-rating = (quality + easiness + helpfulness + feelings)/4
-Review.create(description: description, rating: rating, quality: quality, easiness: easiness, helpfulness: helpfulness, feelings: feelings, student_id: student.id, teacher_id: teacher_search.id)
-
-
-  
-
-  # puts "Do you want to create another review, press 'y' for yes and 'n' for no"
-  # user_response = gets.chomp
-  #   if user_response == 'y'
-  #
-  #   else
-  #     puts "Thanks for reviewing!"
-  #   end
