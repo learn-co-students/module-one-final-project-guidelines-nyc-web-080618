@@ -12,50 +12,68 @@ def print_list(list, attribute)
 end
 
 def welcome
-  puts "Welcome to Rate My Teachers!"
+  puts "Welcome to In My Feelings!"
 end
 
-def gets_command
+def student_or_teacher
+  puts "Are you a student or a teacher?"
+  gets.chomp.downcase
+end
+
+def gets_student_commands
   commands = ["Create a review","Find the highest rated teacher","Find the lowest rated teacher","Find the average rating of a teacher","Exit"]
   puts "What would you like to do?"
-  counter = 1
-  commands.each do |command|
-    puts "#{counter}. #{command}"
-    counter += 1
+  commands.each_with_index do |command,index|
+    puts "#{index+1}. #{command}"
   end
   gets.chomp
 end
 
-def continue?
+def gets_teacher_commands
+  commands = ["Display all your reviews","Find your average rating","Find highest review","Find lowest review","Exit"]
+  commands.each_with_index do |command,index|
+    puts "#{index+1}. #{command}"
+  end
+  gets.chomp
+end
+
+def continue?(type)
   puts "Would you like to do something else?"
   user_input = yes_or_no
-  if user_input == "y"
-    gets_command
+  if user_input == "y" && type == "s"
+    gets_student_commands
+  elsif user_input == "y" && type == "t"
+    gets_teacher_commands
   else
     "5"
   end
 end
 
-def gets_student_name
+def gets_name
   puts "What is your full name?"
-  gets.chomp
+  gets.chomp.downcase.titleize
 end
 
-def gets_teacher_name(school_id)
+def gets_teacher_choice(school_id)
   puts "Which teacher would you like to review?"
   teacher_list = Teacher.where(school_id: school_id)
-  print_list(teacher_list,:name)
-  gets.chomp
+  if teacher_list == []
+    puts "There are no teachers listed for your school. What is your teacher's name?"
+    gets.chomp
+  else
+    print_list(teacher_list,:name)
+    gets.chomp.to_i
+  end
 end
 
 def gets_school_name
-  puts "What school do you attend?"
-  gets.chomp
+  puts "What is the name of your school?"
+  gets.chomp.downcase.titleize
 end
 
 def gets_school_location
   puts "Where is your school located?"
-  gets.chomp
+  gets.chomp.downcase.titleize
 end
 
 def gets_quality
@@ -78,10 +96,8 @@ def gets_description
   gets.chomp
 end
 
-def gets_feeling_score
+def gets_feeling
   puts "How do you feel? Please select an emoji."
   print_list(Feeling.all,:emoji)
-  emoji = gets.chomp
-  feeling = Feeling.find_by(emoji: emoji)
-  feeling.score
+  gets.chomp.to_i
 end
