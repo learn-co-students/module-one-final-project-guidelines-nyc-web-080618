@@ -10,3 +10,4 @@ gem 'commander'
 gem "terminal-table"
 gem 'tty-prompt'
 gem "table_print"
+gem "artii"

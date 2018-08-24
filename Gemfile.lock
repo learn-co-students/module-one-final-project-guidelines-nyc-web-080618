@@ -13,6 +13,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (7.1.4)
+    artii (2.1.2)
     coderay (1.1.1)
     commander (4.4.6)
       highline (~> 1.7.2)
@@ -75,6 +76,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  artii
   commander
   faker
   pry
