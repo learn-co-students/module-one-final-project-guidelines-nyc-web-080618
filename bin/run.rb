@@ -23,7 +23,7 @@ def main
     name = ask("Name: ")
     email = ask("Email: ")
     current_user = User.create(name: name, username: username, email: email)
-    puts "Nice to meet you, #{current_user.name}."
+    puts a.asciify("Nice to meet you, #{current_user.name}.")
   end
 
   speak "Hello #{name}"
