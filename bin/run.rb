@@ -2,6 +2,7 @@ require_relative '../config/environment'
 require_relative "../lib/api_communicator.rb"
 require_relative "../lib/command_line_interface.rb"
 
+welcome
 #gets student name, if student does not exist, create student
 student_name = gets_student_name
 student = Student.find_by(name: student_name)
@@ -37,19 +38,18 @@ if student.school_id == nil || student.school_id != school.id
   student.update(school_id: school.id)
 end
 
-welcome
 user_input = gets_command
 while user_input != "4"
   case user_input
   when "1"
     student.create_review
-    user_input = gets_command
+    user_input = continue?
   when "2"
     school.highest_rated_teacher
-    user_input = gets_command
+    user_input = continue?
   when "3"
     school.lowest_rated_teacher
-    user_input = gets_command
+    user_input = continue?
   when "4"
     puts "average rating for specific teacher"
   when "5"

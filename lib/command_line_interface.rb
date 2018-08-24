@@ -26,8 +26,18 @@ def gets_command
   gets.chomp
 end
 
+def continue?
+  puts "Would you like to do something else?"
+  user_input = yes_or_no
+  if user_input == "y"
+    gets_command
+  else
+    "5"
+  end
+end
+
 def gets_student_name
-  puts "Hey, what is your full name?"
+  puts "What is your full name?"
   gets.chomp
 end
 
