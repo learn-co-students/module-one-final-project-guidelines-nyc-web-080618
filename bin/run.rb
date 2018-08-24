@@ -5,7 +5,15 @@ def main
   prompt = TTY::Prompt.new
   a = Artii::Base.new
   puts a.asciify('Welcome to FlatHub!').light_white.on_black
-  speak ""
+  speak "Knock Knock"
+  sleep(2)
+  speak "Who's there?"
+  sleep(2)
+  speak "Cow says"
+  sleep(2)
+  speak "Cow says who?"
+  sleep(2)
+  speak "No a cow says mooooooooooooooooooooooooooooo"
 
   username = prompt.ask("Username: ", required: true)
 
@@ -13,7 +21,7 @@ def main
 
   if User.find_by(username: username)
     current_user = User.find_by(username: username)
-    puts a.asciify("Welcome back #{current_user.username}").light_white.on_black
+    puts a.asciify("Welcome back #{current_user.name}").light_white.on_black
   else
     puts "We don't know you yet, give us some information about yourself."
     username = prompt.ask("Username: ", required: true)
@@ -23,7 +31,7 @@ def main
     puts a.asciify("Nice to meet you, #{current_user.name}.").light_white.on_black
   end
 
-  speak "Hello #{name}"
+  speak "Hello #{current_user.name}"
   input = ""
   while input != "Exit"
     choices = [
