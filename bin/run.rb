@@ -8,13 +8,22 @@ def main
   puts "Welcome!"
   speak ""
 
-  name = ask("Name: ")
-
   username = ask("Username: ")
 
-  email = ask("Email: ")
+  current_user = nil
 
-  current_user = User.find_by(name: "Justin")
+  if User.find_by(username: username)
+    current_user = User.find_by(username: username)
+    puts "Welcome back #{current_user.username}"
+  else
+    puts "We don't know you yet, give us some information about yourself."
+    username = ask("Username: ")
+    name = ask("Name: ")
+    email = ask("Email: ")
+    current_user = User.create(name: name, username: username, email: email)
+    puts "Nice to meet you, #{current_user.name}."
+  end
+
   speak "Hello #{name}"
   input = ""
   while input != "Exit"

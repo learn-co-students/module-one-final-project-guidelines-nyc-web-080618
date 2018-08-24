@@ -181,12 +181,15 @@ def update_menu(current_user)
     when "Name"
       name = ask("Name: ")
       current_user.update(name: name)
+      current_user.reload
     when "Username"
       username = ask("Username: ")
       current_user.update(username: username)
+      current_user.reload
     when "Email"
       email = ask("Email: ")
       current_user.update(email: email)
+      current_user.reload
     when "Exit"
       return
     else
@@ -200,6 +203,7 @@ def update_menu(current_user)
       puts "What would you like to rename it?"
       new_name = gets.chomp
       repo.update(name: new_name)
+      current_user.reload
     else
       puts "Repo does not exist"
     end
