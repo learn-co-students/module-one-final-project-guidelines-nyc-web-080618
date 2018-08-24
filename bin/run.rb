@@ -1,13 +1,10 @@
 require_relative '../config/environment'
 require_relative './menu'
-require 'commander/import'
-require 'tty-prompt'
-require 'artii'
 
 def main
   prompt = TTY::Prompt.new
   a = Artii::Base.new
-  puts a.asciify('Welcome to FlatHub!')
+  puts a.asciify('Welcome to FlatHub!').light_white.on_black
   speak ""
 
   username = ask("Username: ")
@@ -16,14 +13,14 @@ def main
 
   if User.find_by(username: username)
     current_user = User.find_by(username: username)
-    puts a.asciify("Welcome back #{current_user.username}")
+    puts a.asciify("Welcome back #{current_user.username}").light_white.on_black
   else
     puts "We don't know you yet, give us some information about yourself."
     username = ask("Username: ")
     name = ask("Name: ")
     email = ask("Email: ")
     current_user = User.create(name: name, username: username, email: email)
-    puts a.asciify("Nice to meet you, #{current_user.name}.")
+    puts a.asciify("Nice to meet you, #{current_user.name}.").light_white.on_black
   end
 
   speak "Hello #{name}"

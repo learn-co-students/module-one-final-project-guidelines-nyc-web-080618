@@ -1,5 +1,3 @@
-require 'tty-prompt'
-
 def read_menu(current_user)
   prompt = TTY::Prompt.new
   # system "clear" or system "cls"
@@ -26,7 +24,7 @@ def read_menu(current_user)
       userInput = gets.chomp
       user = User.find_by(username: userInput)
       if user
-        puts tp user.name
+        tp user, "name"
         foundUser = true
       else
         puts "#{userInput} does not exist."
