@@ -34,6 +34,6 @@ ruby bin/run.rb
 
 ### Contributing
 ---
-Fork the repo, make some changes and submit a pull request. These changes can be anything as long as they help contribute to the overall reason for the app, which is the be a clone of GitHub. Please make the reason for the pull descriptive.  
+Fork the repo, make some changes and submit a pull request. These changes can be anything as long as they help contribute to the overall reason for the app, which is the be a clone of GitHub. Please make the reason for the pull descriptive.  Happy coding!
 
 ### [License](LICENSE.md)
