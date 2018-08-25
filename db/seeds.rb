@@ -4,7 +4,7 @@ require "faker"
 
   ##characters
   puts "making characters"
-  5.times do
+  10.times do
   Character.create(name: Faker::Ancient.unique.god, hp:50, power:1)
   end
 

@@ -164,7 +164,7 @@ class Character  < ActiveRecord::Base
       puts "=====================================".red
       puts "=====================================".red
       puts "Select a quest number".bold.white.on_light_blue
-      puts "Number:".bold
+      puts "Number:".bold.white.on_light_blue
 
 #selection prompt the player to actually choose a quest
       selection = gets.chomp
