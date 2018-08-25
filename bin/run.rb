@@ -120,6 +120,7 @@ def save_event(user)
   else
     UserEvent.create!(user_id: user.id, event_id: event.id)
     puts "Event is saved successfully"
+    puts "***************************"
   end
 end
 
@@ -145,9 +146,9 @@ def main_menu(user)
 
       if choice == "1"
           cities = City.pluck(:name)
-          i = 1
+          i = 0
           while i < cities.length
-            puts "#{i}. #{cities[i]}"
+            puts "#{i + 1}. #{cities[i]}"
             i += 1
           end
           puts "Please select:"
@@ -171,9 +172,9 @@ def main_menu(user)
           end
        elsif choice == "2"
             artists =  Artist.pluck(:name)
-            i = 1
+            i = 0
             while i < artists.length
-              puts "#{i}. #{artists[i]}"
+              puts "#{i + 1}. #{artists[i]}"
               i += 1
             end
             puts "Please select:"
@@ -198,6 +199,7 @@ def main_menu(user)
        elsif choice == "3"
            if user.events.count == 0
              puts "You don't have any saved events"
+             puts ""
            else
              puts "Your saved events list"
              puts ""
@@ -210,10 +212,13 @@ def main_menu(user)
              option = gets.chomp
              if option == "2"
                 user.destroy
+                 #binding.pry
                 puts "You have successfully deleted your saved events"
+                puts "***********************************************"
              else
                next
              end
+             next
            end
 
        elsif choice == "4"
