@@ -8,7 +8,7 @@ class Student < ActiveRecord::Base
     if teacher_choice.class == String
       teacher = Teacher.find_by(name: teacher_choice, school_id: self.school_id)
       while teacher == nil
-        puts "We do not recognize this teacher. Would you like to add?"
+        puts $pastel.red("We do not recognize this teacher. Would you like to add?")
         user_input = yes_or_no
         if user_input == "y"
           teacher = Teacher.create(name: teacher_choice,school_id: self.school_id)
@@ -64,17 +64,25 @@ class Student < ActiveRecord::Base
         student.create_review
         user_input = continue?("s")
       when "2"
-        school.highest_rated_teacher
+        if school.teachers == []
+          puts $pastel.red("There are no teachers listed for your school.")
+        else
+          school.highest_rated_teacher
+        end
         user_input = continue?("s")
       when "3"
-        school.lowest_rated_teacher
+        if school.teachers == []
+          puts $pastel.red("There are no teachers listed for your school.")
+        else
+          school.lowest_rated_teacher
+        end
         user_input = continue?("s")
       when "4"
         teacher_list = Teacher.where(school_id: student.school_id)
         if teacher_list == []
-          puts "There are no teachers listed for your school."
+          puts $pastel.red("There are no teachers listed for your school.")
         else
-          puts "Select a teacher:"
+          puts $pastel.red("Select a teacher:")
           print_list(teacher_list,:name)
           user_input = gets.chomp.to_i
           teacher = teacher_list[user_input-1]
